@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="ConditionView">
+        <attr name="numText" format="string" />
+        <attr name="concatText" format="string" />
+        <attr name="enableInput" format="boolean" />
+
+    </declare-styleable>
+</resources>

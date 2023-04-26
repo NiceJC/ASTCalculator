@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <EditText
+        android:id="@+id/et_input"
+        android:text="0"
+        android:inputType="number"
+        android:layout_marginTop="1dp"
+        android:textColor="@color/c_333"
+        android:textStyle="bold"
+        android:textSize="15sp"
+        android:gravity="center"
+        android:background="@null"
+        android:layout_width="wrap_content"
+        android:paddingLeft="3dp"
+        android:paddingRight="3dp"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:id="@+id/tv_concat"
+        android:textColor="@color/c_666"
+        android:text="金币"
+        android:textSize="12sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+</LinearLayout>

@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="40dp"
+    android:layout_marginTop="1dp"
+    android:background="@color/bg_color"
+    android:gravity="center_vertical">
+
+    <TextView
+        android:id="@+id/tv_cd_name"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.6"
+        android:checked="true"
+        android:text="A"
+        android:gravity="center"
+        android:textColor="@color/c_666" />
+
+    <com.ast.astcul.views.ConditionView
+        android:id="@+id/cdv_free_step"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.7"
+        android:gravity="center"
+        app:concatText="次"
+        app:numText="20" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center">
+
+        <com.ast.astcul.views.ConditionView
+            android:id="@+id/cdv_gold_increase_step"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            app:concatText="次"
+            app:numText="5" />
+
+        <com.ast.astcul.views.ConditionView
+            android:id="@+id/cdv_gold_increase_size"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            app:concatText="金"
+            app:numText="2" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center">
+
+        <com.ast.astcul.views.ConditionView
+            android:id="@+id/cdv_progress_increase_step"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            app:concatText="次"
+            app:numText="1" />
+
+        <com.ast.astcul.views.ConditionView
+            android:id="@+id/cdv_progress_increase_size"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            app:concatText="进度"
+            app:numText="1" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center">
+
+        <com.ast.astcul.views.ConditionView
+            android:id="@+id/cdv_coin_get_step"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            app:concatText="次"
+            app:numText="4" />
+
+        <com.ast.astcul.views.ConditionView
+            android:id="@+id/cdv_coin_get_size"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            app:concatText="币"
+            app:numText="1" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1.2"
+        android:gravity="center">
+        <com.ast.astcul.views.ConditionView
+            android:id="@+id/cdv_gold_start_size"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            app:concatText="金"
+            app:numText="2" />
+        <TextView
+            android:text="/"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <com.ast.astcul.views.ConditionView
+            android:id="@+id/cdv_gold_max_size"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            app:numText="120" />
+    </LinearLayout>
+
+</LinearLayout>

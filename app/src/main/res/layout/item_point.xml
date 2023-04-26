@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="30dp"
+    android:layout_marginTop="1dp"
+    android:background="@color/bg_color"
+    android:gravity="center_vertical">
+
+    <TextView
+        android:id="@+id/tv_point_name"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.6"
+        android:gravity="center"
+        android:text="节点1" />
+
+    <com.ast.astcul.views.ConditionView
+        android:id="@+id/cdv_point_progress"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        app:concatText="进度"
+        app:numText="288" />
+
+    <com.ast.astcul.views.ConditionView
+        android:id="@+id/cdv_coin_reward"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        app:concatText="币"
+        app:numText="40" />
+
+
+</LinearLayout>
