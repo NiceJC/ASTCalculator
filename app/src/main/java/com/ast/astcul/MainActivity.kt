@@ -50,7 +50,7 @@ class MainActivity : ComponentActivity() {
             freeStepDaily=20
             startGoldSize=2
             maxGoldSize=120
-            goldIncreaseStep=4
+            goldIncreaseStep=5
             goldIncreaseSize=2
             progressIncreaseStep=1
             progressIncreaseSize=1
