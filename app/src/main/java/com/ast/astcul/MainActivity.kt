@@ -6,21 +6,12 @@ import android.os.Parcelable
 import android.widget.Button
 import android.widget.EditText
 import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.recyclerview.widget.RecyclerView
-import com.ast.astcul.adapter.ConditionAdapter
+import com.ast.astcul.adapter.ConditionRuleAdapter
 import com.ast.astcul.adapter.PointAdapter
-import com.ast.astcul.beans.ConditionBean
+import com.ast.astcul.beans.ConditionRuleBean
 import com.ast.astcul.beans.PointBean
 import com.ast.astcul.beans.StepBean
-import com.ast.astcul.ui.theme.ASTCulTheme
 import com.ast.astcul.views.ConditionView
 import java.util.ArrayList
 
@@ -33,11 +24,11 @@ class MainActivity : ComponentActivity() {
     }
 
     private val stepList = mutableListOf<StepBean>()
-    private val conditionList = mutableListOf<ConditionBean>()
+    private val conditionList = mutableListOf<ConditionRuleBean>()
     private val pointList = mutableListOf<PointBean>()
 
-    private val conditionAdapter by lazy {
-        ConditionAdapter()
+    private val conditionRuleAdapter by lazy {
+        ConditionRuleAdapter()
     }
     private val pointAdapter by lazy{
         PointAdapter()
@@ -45,7 +36,7 @@ class MainActivity : ComponentActivity() {
 
     //初始化数据
     private fun initData(){
-        conditionList.add(ConditionBean().apply {
+        conditionList.add(ConditionRuleBean().apply {
             conditionName="点A"
             freeStepDaily=20
             startGoldSize=2
@@ -57,7 +48,7 @@ class MainActivity : ComponentActivity() {
             coinGetStep=4
             coinGetSize=1
         })
-        conditionList.add(ConditionBean().apply {
+        conditionList.add(ConditionRuleBean().apply {
             conditionName="点B"
             freeStepDaily=1
             startGoldSize=88
@@ -92,8 +83,8 @@ class MainActivity : ComponentActivity() {
         })
     }
     private fun initView(){
-        conditionAdapter.setNewData(conditionList)
-        findViewById<RecyclerView>(R.id.recyclerview_condition).adapter=conditionAdapter
+        conditionRuleAdapter.setNewData(conditionList)
+        findViewById<RecyclerView>(R.id.recyclerview_condition).adapter=conditionRuleAdapter
         pointAdapter.setNewData(pointList)
         findViewById<RecyclerView>(R.id.recyclerview_points).adapter=pointAdapter
 

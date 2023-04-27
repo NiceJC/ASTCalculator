@@ -3,20 +3,20 @@ package com.ast.astcul.adapter;
 import android.widget.TextView;
 
 import com.ast.astcul.R;
-import com.ast.astcul.beans.ConditionBean;
+import com.ast.astcul.beans.ConditionRuleBean;
 import com.ast.astcul.views.ConditionView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 
 
 
-public class ConditionAdapter extends BaseQuickAdapter<ConditionBean, BaseViewHolder> {
-    public ConditionAdapter() {
+public class ConditionRuleAdapter extends BaseQuickAdapter<ConditionRuleBean, BaseViewHolder> {
+    public ConditionRuleAdapter() {
         super(R.layout.item_condition);
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, ConditionBean item) {
+    protected void convert(BaseViewHolder helper, ConditionRuleBean item) {
         TextView tvConditionName = helper.getView(R.id.tv_cd_name);
         tvConditionName.setText(item.getConditionName());
         ConditionView cdv1 = helper.getView(R.id.cdv_free_step);

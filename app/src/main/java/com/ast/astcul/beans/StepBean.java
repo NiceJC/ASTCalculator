@@ -7,8 +7,8 @@ public class StepBean {
     private int progressSize;
     //获得的活动币
     private int coinGet;
-    //获得的节点币
-    private int coinPoint;
+//    //获得的节点币
+//    private int coinPoint;
 
 
     @Override
@@ -17,7 +17,6 @@ public class StepBean {
                 "金币=" + goldSize +
                 ", 进度=" + progressSize +
                 ", 活动币=" + coinGet +
-                ", 节点币=" + coinPoint +
                 '}';
     }
 
@@ -45,11 +44,11 @@ public class StepBean {
         this.coinGet = coinGet;
     }
 
-    public int getCoinPoint() {
-        return coinPoint;
-    }
-
-    public void setCoinPoint(int coinPoint) {
-        this.coinPoint = coinPoint;
-    }
+//    public int getCoinPoint() {
+//        return coinPoint;
+//    }
+//
+//    public void setCoinPoint(int coinPoint) {
+//        this.coinPoint = coinPoint;
+//    }
 }

@@ -5,9 +5,7 @@ import android.os.Parcelable;
 
 import androidx.annotation.NonNull;
 
-import java.io.Serializable;
-
-public class ConditionBean implements Parcelable {
+public class ConditionRuleBean implements Parcelable {
 
     //step名称
     private String conditionName;
@@ -30,7 +28,7 @@ public class ConditionBean implements Parcelable {
     //活动币每获取数值
     private int coinGetSize;
 
-    protected ConditionBean(Parcel in) {
+    protected ConditionRuleBean(Parcel in) {
         conditionName = in.readString();
         freeStepDaily = in.readInt();
         startGoldSize = in.readInt();
@@ -43,18 +41,18 @@ public class ConditionBean implements Parcelable {
         coinGetSize = in.readInt();
     }
 
-    public ConditionBean() {
+    public ConditionRuleBean() {
     }
 
-    public static final Creator<ConditionBean> CREATOR = new Creator<ConditionBean>() {
+    public static final Creator<ConditionRuleBean> CREATOR = new Creator<ConditionRuleBean>() {
         @Override
-        public ConditionBean createFromParcel(Parcel in) {
-            return new ConditionBean(in);
+        public ConditionRuleBean createFromParcel(Parcel in) {
+            return new ConditionRuleBean(in);
         }
 
         @Override
-        public ConditionBean[] newArray(int size) {
-            return new ConditionBean[size];
+        public ConditionRuleBean[] newArray(int size) {
+            return new ConditionRuleBean[size];
         }
     };
 
