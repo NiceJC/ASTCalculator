@@ -147,7 +147,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 app:concatText="天"
-                app:numText="7">
+                app:numText="5">
 
             </com.ast.astcul.views.ConditionView>
 

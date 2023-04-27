@@ -1,6 +1,7 @@
 package com.ast.astcul
 
 import android.os.Bundle
+import android.util.Log
 import android.widget.ImageView
 import androidx.activity.ComponentActivity
 import androidx.recyclerview.widget.RecyclerView
@@ -19,6 +20,8 @@ class ResultActivity : ComponentActivity() {
         initView()
         startCalculate()
     }
+
+    private val TAG = "calculate"
 
     private val resultAdapter by lazy {
         LevelAdapter()
@@ -63,14 +66,15 @@ class ResultActivity : ComponentActivity() {
     private var totalProgressPerDay: Int = 0
 
     //当前单日花金
-    private var totalGoldPerDay: Int = 0
+//    private var totalGoldPerDay: Int = 0
 
     //当前单日获得活动币
-    private var totalCoinPerDay: Int = 0
+//    private var totalCoinPerDay: Int = 0
 
     private fun startCalculate() {
         calculateForTargetProgress(0)
         pointList.forEachIndexed { index, pointBean ->
+//            if(index==3)
             calculateForTargetProgress(pointBean.pointProgress)
         }
         resultAdapter.setNewData(levelList)
@@ -78,15 +82,17 @@ class ResultActivity : ComponentActivity() {
 
     //计算目标进度（以进度为准）
     private fun calculateForTargetProgress(targetProgress: Int) {
-        if (targetProgress == 0) {
-            //使用免费次数
-            conditionStatusList.forEachIndexed { index, condition ->
-                for (i in 1..condition.rule.freeStepDaily) {
-                    clickStep(condition)
-                }
+        //使用免费次数
+        conditionStatusList.forEachIndexed { index, condition ->
+            for (i in 1..condition.rule.freeStepDaily) {
+                clickStep(condition)
             }
-        } else {
-            val targetProgressPerDay = targetProgress / date
+        }
+        if (targetProgress != 0) {
+            var targetProgressPerDay = targetProgress / date
+            if(targetProgress %date>0){
+                targetProgressPerDay++
+            }
             while (totalProgressPerDay < targetProgressPerDay) {
                 //遍历所有路线 计算成本 选成本低的
                 var bestIndex = 0
@@ -95,13 +101,14 @@ class ResultActivity : ComponentActivity() {
                     var goldSize = 0
                     var progressSize = 0
                     conditionStatusBean.run {
-                        if (currentStepIndex < rule.freeStepDaily) {
+                        if (currentStepIndex + 1 < rule.freeStepDaily) {
                             goldSize = 0
                         } else {
-                            goldSize =
-                                rule.goldIncreaseSize * ((currentStepIndex - rule.freeStepDaily) / rule.goldIncreaseStep)
+                            val multiple=(currentStepIndex  - rule.freeStepDaily) / rule.goldIncreaseStep
+
+                            goldSize = rule.goldIncreaseSize * multiple+rule.startGoldSize
                         }
-                        if (currentStepIndex >= rule.progressIncreaseStep && (currentStepIndex) % rule.progressIncreaseStep == 0) {
+                        if (currentStepIndex + 1 >= rule.progressIncreaseStep && (currentStepIndex + 1) % rule.progressIncreaseStep == 0) {
                             progressSize = rule.progressIncreaseSize
                         }
                         if (progressSize > targetProgressPerDay - totalProgressPerDay) {
@@ -125,14 +132,17 @@ class ResultActivity : ComponentActivity() {
     private fun clickStep(condition: ConditionStatusBean) {
 
         condition.run {
+            currentStepIndex++
             var goldSize = 0
             var progressSize = 0
             var coinGet = 0
-            if (currentStepIndex < rule.freeStepDaily) {
+            if (currentStepIndex <= rule.freeStepDaily) {
                 goldSize = 0
             } else {
+                val multiple=(currentStepIndex-1 - rule.freeStepDaily) / rule.goldIncreaseStep
+
                 goldSize =
-                    rule.goldIncreaseSize * ((currentStepIndex - rule.freeStepDaily) / rule.goldIncreaseStep)
+                    rule.goldIncreaseSize * multiple+rule.startGoldSize
             }
             if (currentStepIndex >= rule.progressIncreaseStep && (currentStepIndex) % rule.progressIncreaseStep == 0) {
                 progressSize = rule.progressIncreaseSize
@@ -147,10 +157,8 @@ class ResultActivity : ComponentActivity() {
                 this.coinGet = coinGet
             }
             stepList.add(stepBean)
-            currentStepIndex++
             totalProgressPerDay += progressSize
-            totalGoldPerDay += goldSize
-            totalCoinPerDay += coinGet
+
         }
     }
 
@@ -163,19 +171,32 @@ class ResultActivity : ComponentActivity() {
         } else {
             "节点" + levelList.size + "档"
         }
-        //计算节点币
-        var allCoins = this@ResultActivity.totalCoinPerDay * date
+        var levelCoin = 0
+        var levelGold = 0
+        var levelProgress = 0
+        stepList.forEachIndexed { index, stepBean ->
+            levelCoin += stepBean.coinGet
+            levelGold += stepBean.goldSize
+            levelProgress += stepBean.progressSize
+            Log.d(TAG, stepBean.toString())
+        }
+        //乘以天数 得到总的
+        levelCoin *= date
+        levelGold *= date
+        levelProgress *= date
+
+        //活动币要再加上节点币
         pointList.forEachIndexed { index, pointBean ->
-            if (totalProgressPerDay * date >= pointBean.pointProgress) {
-                allCoins += pointBean.rewardCoin
+            if (levelProgress >= pointBean.pointProgress) {
+                levelCoin += pointBean.rewardCoin
             }
         }
 
         val levelBean = LevelBean().apply {
             this@apply.levelName = levelName
-            this@apply.totalGold = this@ResultActivity.totalGoldPerDay * date
-            this@apply.totalProgress = this@ResultActivity.totalProgressPerDay
-            this@apply.totalCoin = allCoins
+            this@apply.totalGold = levelGold
+            this@apply.totalProgress = levelProgress
+            this@apply.totalCoin = levelCoin
         }
         levelList.add(levelBean)
     }
@@ -183,8 +204,10 @@ class ResultActivity : ComponentActivity() {
     //重置信息  以备再次计算
     private fun clearCalculateInfo() {
         totalProgressPerDay = 0
-        totalGoldPerDay = 0
-        totalCoinPerDay = 0
+        stepList.clear()
+        conditionStatusList.forEachIndexed { index, conditionStatusBean ->
+            conditionStatusBean.currentStepIndex = 0
+        }
     }
 }
 
