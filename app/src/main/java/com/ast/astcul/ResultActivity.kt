@@ -6,6 +6,7 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.ast.astcul.adapter.LevelAdapter
@@ -82,6 +83,8 @@ class ResultActivity : ComponentActivity() {
 
     //当前单日进度
     private var totalProgressPerDay: Int = 0
+    //当前单日币
+    private var totalCoinPerDay: Int = 0
 
     private fun startCalculate() {
         calculateForTargetProgress(0)
@@ -89,6 +92,7 @@ class ResultActivity : ComponentActivity() {
 //            if(index==3)
             calculateForTargetProgress(pointBean.pointProgress)
         }
+        calculateForTargetCoin()
         resultAdapter.setNewData(levelList)
     }
 
@@ -140,8 +144,77 @@ class ResultActivity : ComponentActivity() {
         clearCalculateInfo()
     }
 
+    //以目标币数 计算
+    private fun calculateForTargetCoin() {
+        if(levelList.isNullOrEmpty()){
+            Toast.makeText(this, "错了错了", Toast.LENGTH_SHORT).show()
+            return
+        }
+        if(targetCoin>levelList.last().totalCoin){
+            Toast.makeText(this, "暂不支持拉爆计算", Toast.LENGTH_SHORT).show()
+            return
+        }
+        if(targetCoin<=levelList.first().totalCoin){
+            Toast.makeText(this, "白嫖你也要算？", Toast.LENGTH_SHORT).show()
+            return
+        }
+        var baseLevelIndex=0
+        levelList.forEachIndexed { index, levelBean ->
+            if(targetCoin>=levelBean.totalCoin){
+                baseLevelIndex=index
+            }
+        }
+        for (i in 0 until  baseLevelIndex){
+            targetCoin-=pointList[i].rewardCoin
+        }
+        var targetCoinPerDay=targetCoin/date
+        var targetCoinFinalLack=targetCoin-(targetCoinPerDay*date)
+        if(targetCoinPerDay==0){
+            Toast.makeText(this, "请直接参照档位", Toast.LENGTH_SHORT).show()
+            return
+        }
+        //使用免费次数
+        conditionStatusList.forEachIndexed { index, condition ->
+            for (i in 1..condition.rule.freeStepDaily) {
+                clickStep(condition)
+            }
+        }
 
-    //点击花金
+        while (totalCoinPerDay < targetCoinPerDay) {
+            //遍历所有路线 计算成本 选成本低的
+            var bestIndex = 0
+            var bestPrice = 0f
+            conditionStatusList.forEachIndexed { index, conditionStatusBean ->
+                var goldSize = 0
+                var coinGet=0f
+                conditionStatusBean.run {
+                    if (currentStepIndex + 1 < rule.freeStepDaily) {
+                        goldSize = 0
+                    } else {
+                        val multiple =
+                            (currentStepIndex - rule.freeStepDaily) / rule.goldIncreaseStep
+
+                        goldSize = rule.goldIncreaseSize * multiple + rule.startGoldSize
+                    }
+                    coinGet=rule.coinGetSize.toFloat()/rule.coinGetStep
+                    if (coinGet > targetCoinPerDay - totalCoinPerDay) {
+                        coinGet = (targetCoinPerDay - totalCoinPerDay.toFloat())
+                    }
+                }
+                if (bestPrice == 0f || bestPrice > (goldSize.toFloat() / coinGet)) {
+                    bestPrice = goldSize.toFloat() / coinGet
+                    bestIndex = index
+                }
+            }
+            clickStep(conditionStatusList[bestIndex])
+        }
+        generateLevel()
+        clearCalculateInfo()
+
+    }
+
+
+        //点击花金
     private fun clickStep(condition: ConditionStatusBean) {
 
         condition.run {
@@ -174,7 +247,7 @@ class ResultActivity : ComponentActivity() {
             }
             stepList.add(stepBean)
             totalProgressPerDay += progressSize
-
+            totalCoinPerDay+=coinGet
         }
     }
 
@@ -246,6 +319,7 @@ class ResultActivity : ComponentActivity() {
     //重置信息  以备再次计算
     private fun clearCalculateInfo() {
         totalProgressPerDay = 0
+        totalCoinPerDay=0
         stepList.clear()
         conditionStatusList.forEachIndexed { index, conditionStatusBean ->
             conditionStatusBean.currentStepIndex = 0
