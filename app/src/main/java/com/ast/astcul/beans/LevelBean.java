@@ -1,5 +1,7 @@
 package com.ast.astcul.beans;
 
+import java.util.List;
+
 public class LevelBean {
 
     //档位名称
@@ -10,6 +12,8 @@ public class LevelBean {
     private int totalProgress;
     //总共获得的活动币
     private int totalCoin;
+    //step记录
+    private List<StepBean> stepListRecord;
 
     @Override
     public String toString() {
@@ -52,5 +56,13 @@ public class LevelBean {
 
     public void setLevelName(String levelName) {
         this.levelName = levelName;
+    }
+
+    public List<StepBean> getStepListRecord() {
+        return stepListRecord;
+    }
+
+    public void setStepListRecord(List<StepBean> stepListRecord) {
+        this.stepListRecord = stepListRecord;
     }
 }

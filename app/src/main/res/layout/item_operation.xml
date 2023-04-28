@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="40dp"
+    android:layout_marginTop="1dp"
+    android:background="@color/bg_color"
+    android:gravity="center_vertical">
+
+    <TextView
+        android:id="@+id/tv_operation_name"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="点A"
+        android:textSize="12sp" />
+
+    <LinearLayout
+        android:gravity="center"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="2">
+
+        <com.ast.astcul.views.ConditionView
+            android:id="@+id/cdv_operation_gold"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            app:concatText="金"
+            app:enableInput="false"
+            app:numText="8" />
+
+        <com.ast.astcul.views.ConditionView
+            android:layout_marginStart="10dp"
+            android:id="@+id/cdv_operation_count"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            app:concatText="下"
+            app:enableInput="false"
+            app:numText="3" />
+    </LinearLayout>
+
+
+</LinearLayout>

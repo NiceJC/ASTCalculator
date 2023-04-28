@@ -2,38 +2,152 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
 
-        <RelativeLayout
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:scaleType="center"
+            android:src="@mipmap/back" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:paddingVertical="5dp"
+            android:text="计算结果"
+            android:textColor="@color/c_333"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="1dp"
+        android:background="@color/bg_color"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.6"
+            android:gravity="center" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="总进度"
+            android:textColor="@color/c_666"
+            android:textSize="12sp" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.8"
+            android:gravity="center"
+            android:text="总活动币"
+            android:textColor="@color/c_666"
+            android:textSize="12sp" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1.3"
+            android:gravity="center"
+            android:text="金币花费"
+            android:textColor="@color/c_666"
+            android:textSize="12sp" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.8"
+            android:gravity="center"
+            android:text="每币花金"
+            android:textColor="@color/c_666"
+            android:textSize="12sp" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.8"
+            android:gravity="center"
+            android:text="每日操作"
+            android:textColor="@color/c_666"
+            android:textSize="12sp" />
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerview_results"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:itemCount="5"
+        tools:listitem="@layout/item_result" />
+
+
+    <LinearLayout
+        android:id="@+id/ll_level_detail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_detail_title"
             android:layout_width="match_parent"
-            android:layout_height="50dp">
-
-            <ImageView
-                android:id="@+id/iv_back"
-                android:scaleType="center"
-                android:src="@mipmap/back"
-                android:layout_width="50dp"
-                android:layout_height="match_parent"/>
-            <TextView
-                android:layout_centerInParent="true"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:paddingVertical="5dp"
-                android:text="计算结果"
-                android:textColor="@color/c_333"
-                android:textStyle="bold" />
-
-        </RelativeLayout>
-
-
+            android:layout_height="wrap_content"
+            android:background="@color/bg_color"
+            android:gravity="center"
+            android:paddingVertical="5dp"
+            android:text="档位1详情"
+            android:textColor="@color/c_333"
+            android:textStyle="bold" />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="35dp"
+            android:background="@color/bg_color"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="每日进度"
+                android:textColor="@color/c_666" />
+
+            <com.ast.astcul.views.ConditionView
+                android:id="@+id/cdv_progress_date"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:gravity="center"
+                app:concatText="进度"
+                app:numText="1">
+
+            </com.ast.astcul.views.ConditionView>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
             android:layout_marginTop="1dp"
             android:background="@color/bg_color"
             android:gravity="center_vertical">
@@ -41,61 +155,52 @@
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="0.6"
-                android:gravity="center" />
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="每日花金"
+                android:textColor="@color/c_666" />
+
+            <com.ast.astcul.views.ConditionView
+                android:id="@+id/cdv_gold_date"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:gravity="center"
+                app:concatText="金"
+                app:numText="1">
+
+            </com.ast.astcul.views.ConditionView>
+        </LinearLayout>
+
+        <LinearLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="1dp"
+            android:gravity="center_vertical">
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:gravity="center"
-                android:text="总进度"
-                android:textColor="@color/c_666"
-                android:textSize="12sp" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="0.8"
-                android:gravity="center"
-                android:text="总活动币"
-                android:textColor="@color/c_666"
-                android:textSize="12sp" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1.3"
-                android:gravity="center"
-                android:text="金币花费"
-                android:textColor="@color/c_666"
-                android:textSize="12sp" />
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="0.8"
-                android:gravity="center"
-                android:text="每币花金"
-                android:textColor="@color/c_666"
-                android:textSize="12sp" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="0.8"
+                android:background="@color/bg_color"
                 android:gravity="center"
                 android:text="每日操作"
-                android:textColor="@color/c_666"
-                android:textSize="12sp" />
-        </LinearLayout>
+                android:textColor="@color/c_666" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerview_results"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:itemCount="5"
-            tools:listitem="@layout/item_result" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerview_operation"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="1dp"
+                android:layout_weight="2"
+                android:orientation="vertical"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:itemCount="3"
+                tools:listitem="@layout/item_operation" />
+
+        </LinearLayout>
     </LinearLayout>
+
+</LinearLayout>
 

@@ -2,15 +2,20 @@ package com.ast.astcul
 
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.activity.ComponentActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.ast.astcul.adapter.LevelAdapter
+import com.ast.astcul.adapter.OperationAdapter
 import com.ast.astcul.beans.ConditionRuleBean
 import com.ast.astcul.beans.ConditionStatusBean
 import com.ast.astcul.beans.PointBean
 import com.ast.astcul.beans.LevelBean
 import com.ast.astcul.beans.StepBean
+import com.ast.astcul.views.ConditionView
 
 class ResultActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,6 +31,10 @@ class ResultActivity : ComponentActivity() {
     private val resultAdapter by lazy {
         LevelAdapter()
     }
+    private val operationAdapter by lazy {
+        OperationAdapter()
+    }
+
     private val stepList = mutableListOf<StepBean>()
     private val levelList = mutableListOf<LevelBean>()
 
@@ -56,20 +65,23 @@ class ResultActivity : ComponentActivity() {
     }
 
     private fun initView() {
+        findViewById<View>(R.id.ll_level_detail).visibility = View.GONE
         findViewById<RecyclerView>(R.id.recyclerview_results).adapter = resultAdapter
+        findViewById<RecyclerView>(R.id.recyclerview_operation).adapter = operationAdapter
+
         findViewById<ImageView>(R.id.iv_back).setOnClickListener {
             finish()
         }
+        resultAdapter.setOnLevelClick {
+            showLevelDetail(it)
+        }
+        findViewById<RecyclerView>(R.id.recyclerview_results).adapter = resultAdapter
+
+        operationAdapter
     }
 
     //当前单日进度
     private var totalProgressPerDay: Int = 0
-
-    //当前单日花金
-//    private var totalGoldPerDay: Int = 0
-
-    //当前单日获得活动币
-//    private var totalCoinPerDay: Int = 0
 
     private fun startCalculate() {
         calculateForTargetProgress(0)
@@ -90,7 +102,7 @@ class ResultActivity : ComponentActivity() {
         }
         if (targetProgress != 0) {
             var targetProgressPerDay = targetProgress / date
-            if(targetProgress %date>0){
+            if (targetProgress % date > 0) {
                 targetProgressPerDay++
             }
             while (totalProgressPerDay < targetProgressPerDay) {
@@ -104,9 +116,10 @@ class ResultActivity : ComponentActivity() {
                         if (currentStepIndex + 1 < rule.freeStepDaily) {
                             goldSize = 0
                         } else {
-                            val multiple=(currentStepIndex  - rule.freeStepDaily) / rule.goldIncreaseStep
+                            val multiple =
+                                (currentStepIndex - rule.freeStepDaily) / rule.goldIncreaseStep
 
-                            goldSize = rule.goldIncreaseSize * multiple+rule.startGoldSize
+                            goldSize = rule.goldIncreaseSize * multiple + rule.startGoldSize
                         }
                         if (currentStepIndex + 1 >= rule.progressIncreaseStep && (currentStepIndex + 1) % rule.progressIncreaseStep == 0) {
                             progressSize = rule.progressIncreaseSize
@@ -136,13 +149,14 @@ class ResultActivity : ComponentActivity() {
             var goldSize = 0
             var progressSize = 0
             var coinGet = 0
+            var repeatTime=0
             if (currentStepIndex <= rule.freeStepDaily) {
                 goldSize = 0
+                repeatTime=currentStepIndex-1
             } else {
-                val multiple=(currentStepIndex-1 - rule.freeStepDaily) / rule.goldIncreaseStep
-
-                goldSize =
-                    rule.goldIncreaseSize * multiple+rule.startGoldSize
+                val multiple = (currentStepIndex - 1 - rule.freeStepDaily) / rule.goldIncreaseStep
+                goldSize = rule.goldIncreaseSize * multiple + rule.startGoldSize
+                repeatTime=(currentStepIndex - 1 - rule.freeStepDaily) % rule.goldIncreaseStep
             }
             if (currentStepIndex >= rule.progressIncreaseStep && (currentStepIndex) % rule.progressIncreaseStep == 0) {
                 progressSize = rule.progressIncreaseSize
@@ -152,9 +166,11 @@ class ResultActivity : ComponentActivity() {
             }
 
             val stepBean = StepBean().apply {
+                this.conditionName = condition.rule.conditionName
                 this.goldSize = goldSize
                 this.progressSize = progressSize
                 this.coinGet = coinGet
+                this.repeatTime=repeatTime
             }
             stepList.add(stepBean)
             totalProgressPerDay += progressSize
@@ -197,8 +213,34 @@ class ResultActivity : ComponentActivity() {
             this@apply.totalGold = levelGold
             this@apply.totalProgress = levelProgress
             this@apply.totalCoin = levelCoin
+            this@apply.stepListRecord = mutableListOf<StepBean>().apply {
+                addAll(stepList)
+            }
         }
         levelList.add(levelBean)
+    }
+
+    private fun showLevelDetail(levelBean: LevelBean){
+        findViewById<LinearLayout>(R.id.ll_level_detail).visibility = View.VISIBLE
+        findViewById<TextView>(R.id.tv_detail_title).text = levelBean.levelName+"详情"
+        findViewById<ConditionView>(R.id.cdv_progress_date).conditionInt=levelBean.totalProgress/date
+        findViewById<ConditionView>(R.id.cdv_gold_date).conditionInt=levelBean.totalGold/date
+        //避免麻烦 这里直接吧stepList按操作拆分开
+        val operationList= mutableListOf<StepBean>()
+        for(i in levelBean.stepListRecord.size-1 downTo  0){
+            levelBean.stepListRecord[i].apply {
+                var hasSet=false
+                operationList.forEachIndexed { index, operationBean ->
+                    if(operationBean.conditionName.equals(this.conditionName)){
+                        hasSet=true
+                    }
+                }
+                if(!hasSet){
+                    operationList.add(this)
+                }
+            }
+        }
+        operationAdapter.setNewData(operationList)
     }
 
     //重置信息  以备再次计算

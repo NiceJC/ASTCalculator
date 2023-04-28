@@ -10,12 +10,12 @@
 
     <TextView
         android:id="@+id/tv_level_name"
-        android:textSize="12sp"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="0.6"
         android:gravity="center"
-        android:text="节点1档" />
+        android:text="节点1档"
+        android:textSize="12sp" />
 
     <com.ast.astcul.views.ConditionView
         android:id="@+id/cdv_level_progress"
@@ -24,6 +24,7 @@
         android:layout_weight="1"
         android:gravity="center"
         app:concatText="进度"
+        app:enableInput="false"
         app:numText="288" />
 
     <com.ast.astcul.views.ConditionView
@@ -32,7 +33,9 @@
         android:layout_height="wrap_content"
         android:layout_weight="0.8"
         android:gravity="center"
+
         app:concatText="币"
+        app:enableInput="false"
         app:numText="40" />
 
     <com.ast.astcul.views.ConditionView
@@ -41,8 +44,11 @@
         android:layout_height="wrap_content"
         android:layout_weight="1.3"
         android:gravity="center"
+
         app:concatText="金"
+        app:enableInput="false"
         app:numText="1000" />
+
     <com.ast.astcul.views.ConditionView
         android:id="@+id/cdv_level_gold_per_coin"
         android:layout_width="0dp"
@@ -50,7 +56,9 @@
         android:layout_weight="0.8"
         android:gravity="center"
         app:concatText="金"
+        app:enableInput="false"
         app:numText="12" />
+
     <TextView
         android:id="@+id/tv_check"
         android:layout_width="0dp"
