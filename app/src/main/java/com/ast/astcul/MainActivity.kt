@@ -38,7 +38,7 @@ class MainActivity : ComponentActivity() {
     private fun initData(){
         conditionList.add(ConditionRuleBean().apply {
             conditionName="点A"
-            freeStepDaily=20
+            freeStepDaily=30
             startGoldSize=2
             maxGoldSize=120
             goldIncreaseStep=5
@@ -46,40 +46,55 @@ class MainActivity : ComponentActivity() {
             progressIncreaseStep=1
             progressIncreaseSize=1
             coinGetStep=4
-            coinGetSize=1
+            coinGetSize=0
         })
         conditionList.add(ConditionRuleBean().apply {
             conditionName="点B"
-            freeStepDaily=1
-            startGoldSize=88
-            maxGoldSize=888
+            freeStepDaily=0
+            startGoldSize=888
+            maxGoldSize=8888
             goldIncreaseStep=1
-            goldIncreaseSize=100
+            goldIncreaseSize=1000
             progressIncreaseStep=1
             progressIncreaseSize=8
             coinGetStep=1
-            coinGetSize=2
+            coinGetSize=1
         })
 
         pointList.add(PointBean().apply {
             pointName="节点1"
-            pointProgress=288
-            rewardCoin=40
+            pointProgress=280
+            rewardCoin=48
         })
         pointList.add(PointBean().apply {
             pointName="节点2"
-            pointProgress= 788
-            rewardCoin= 60
+            pointProgress= 550
+            rewardCoin= 58
         })
         pointList.add(PointBean().apply {
             pointName="节点3"
-            pointProgress= 1088
-            rewardCoin= 80
+            pointProgress= 950
+            rewardCoin= 78
         })
         pointList.add(PointBean().apply {
             pointName="节点4"
-            pointProgress= 1388
-            rewardCoin= 140
+            pointProgress= 1300
+            rewardCoin= 78
+        })
+        pointList.add(PointBean().apply {
+            pointName="节点5"
+            pointProgress= 1450
+            rewardCoin= 96
+        })
+        pointList.add(PointBean().apply {
+            pointName="节点6"
+            pointProgress= 1600
+            rewardCoin= 96
+        })
+        pointList.add(PointBean().apply {
+            pointName="节点7"
+            pointProgress= 1800
+            rewardCoin= 116
         })
     }
     private fun initView(){

@@ -147,7 +147,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 app:concatText="天"
-                app:numText="5">
+                app:numText="7">
 
             </com.ast.astcul.views.ConditionView>
 
@@ -208,11 +208,13 @@
         android:gravity="center">
 
         <TextView
+            android:visibility="gone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="目标币数：" />
 
         <EditText
+            android:visibility="gone"
             android:id="@+id/et_target"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -221,6 +223,8 @@
             android:text="288" />
 
         <TextView
+            android:visibility="gone"
+
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="币" />

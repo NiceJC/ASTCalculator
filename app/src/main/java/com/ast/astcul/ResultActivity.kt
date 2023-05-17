@@ -92,7 +92,7 @@ class ResultActivity : ComponentActivity() {
 //            if(index==3)
             calculateForTargetProgress(pointBean.pointProgress)
         }
-        calculateForTargetCoin()
+//        calculateForTargetCoin()
         resultAdapter.setNewData(levelList)
     }
 
