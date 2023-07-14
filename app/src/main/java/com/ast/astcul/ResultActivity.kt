@@ -162,11 +162,17 @@ class ResultActivity : ComponentActivity() {
             return
         }
         var baseLevelIndex=0
-        levelList.forEachIndexed { index, levelBean ->
-            if(targetCoin>=levelBean.totalCoin){
-                baseLevelIndex=index
-            }
+       levelList.forEachIndexed { index, levelBean ->
+               if(targetCoin>=levelBean.totalCoin){
+                   baseLevelIndex=index
+               }
+         }
+        if(targetCoin> levelList[baseLevelIndex+1].totalCoin- pointList[baseLevelIndex].rewardCoin){
+            //站在下一level赠送coin范围内
+            baseLevelIndex++
+            targetCoin=levelList[baseLevelIndex].totalCoin
         }
+
         for (i in 0 until  baseLevelIndex){
             targetCoin-=pointList[i].rewardCoin
         }
