@@ -24,6 +24,7 @@
             </intent-filter>
         </activity>
         <activity android:name="com.ast.astcul.ResultActivity" />
+        <activity android:name="com.ast.astcul.CakeActivity" />
     </application>
 
 </manifest>

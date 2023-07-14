@@ -23,7 +23,6 @@ class MainActivity : ComponentActivity() {
         initView()
     }
 
-    private val stepList = mutableListOf<StepBean>()
     private val conditionList = mutableListOf<ConditionRuleBean>()
     private val pointList = mutableListOf<PointBean>()
 
@@ -45,57 +44,119 @@ class MainActivity : ComponentActivity() {
             goldIncreaseSize=2
             progressIncreaseStep=1
             progressIncreaseSize=1
-            coinGetStep=4
-            coinGetSize=0
+            coinGetStep=1
+            coinGetSize=1
         })
         conditionList.add(ConditionRuleBean().apply {
             conditionName="点B"
             freeStepDaily=0
-            startGoldSize=888
+            startGoldSize=18
             maxGoldSize=8888
             goldIncreaseStep=1
-            goldIncreaseSize=1000
+            goldIncreaseSize=30
             progressIncreaseStep=1
-            progressIncreaseSize=8
+            progressIncreaseSize=5
             coinGetStep=1
-            coinGetSize=1
+            coinGetSize=5
         })
 
+        conditionList.add(ConditionRuleBean().apply {
+            conditionName="点C"
+            freeStepDaily=0
+            startGoldSize=88
+            maxGoldSize=8888
+            goldIncreaseStep=1
+            goldIncreaseSize=100
+            progressIncreaseStep=1
+            progressIncreaseSize=10
+            coinGetStep=1
+            coinGetSize=10
+        })
         pointList.add(PointBean().apply {
             pointName="节点1"
-            pointProgress=280
-            rewardCoin=48
+            pointProgress=290
+            rewardCoin=10+15+20+10
         })
         pointList.add(PointBean().apply {
             pointName="节点2"
-            pointProgress= 550
-            rewardCoin= 58
+            pointProgress=290+300-10
+            rewardCoin=10+15+20+10
         })
         pointList.add(PointBean().apply {
             pointName="节点3"
-            pointProgress= 950
-            rewardCoin= 78
+            pointProgress=290+300+310-20
+            rewardCoin=15+20+25+10
         })
         pointList.add(PointBean().apply {
             pointName="节点4"
-            pointProgress= 1300
-            rewardCoin= 78
+            pointProgress=290+300+310+320-30
+            rewardCoin=15+20+25+10
         })
         pointList.add(PointBean().apply {
             pointName="节点5"
-            pointProgress= 1450
-            rewardCoin= 96
+            pointProgress=290+300+310+320+330-40
+            rewardCoin=20+25+30+10
         })
         pointList.add(PointBean().apply {
             pointName="节点6"
-            pointProgress= 1600
-            rewardCoin= 96
+            pointProgress=290+300+310+320+330+350-50
+            rewardCoin=25+30+35+10
         })
         pointList.add(PointBean().apply {
             pointName="节点7"
-            pointProgress= 1800
-            rewardCoin= 116
+            pointProgress=290+300+310+320+330+350+350-60
+            rewardCoin=25+30+35+10
         })
+//        pointList.add(PointBean().apply {
+//            pointName="节点8"
+//            pointProgress=30*24
+//            rewardCoin=23*3
+//        })
+//        pointList.add(PointBean().apply {
+//            pointName="节点9"
+//            pointProgress=30*27
+//            rewardCoin=23*3
+//        })
+//        pointList.add(PointBean().apply {
+//            pointName="节点10"
+//            pointProgress=30*30
+//            rewardCoin=23*3
+//        })
+//        pointList.add(PointBean().apply {
+//            pointName="节点11"
+//            pointProgress=30*33
+//            rewardCoin=23*3
+//        })
+//        pointList.add(PointBean().apply {
+//            pointName="节点121"
+//            pointProgress=30*36
+//            rewardCoin=23*3
+//        })
+//        pointList.add(PointBean().apply {
+//            pointName="节点13"
+//            pointProgress=30*39
+//            rewardCoin=23*3
+//        })
+//        pointList.add(PointBean().apply {
+//            pointName="节点14"
+//            pointProgress=30*42
+//            rewardCoin=23*3
+//        })
+//        pointList.add(PointBean().apply {
+//            pointName="节点15"
+//            pointProgress=30*45
+//            rewardCoin=23*3
+//        })
+//        pointList.add(PointBean().apply {
+//            pointName="节点16"
+//            pointProgress=30*48
+//            rewardCoin=23*3
+//        })
+//        pointList.add(PointBean().apply {
+//            pointName="节点17"
+//            pointProgress=1880
+//            rewardCoin=588
+//        })
     }
     private fun initView(){
         conditionRuleAdapter.setNewData(conditionList)
@@ -104,22 +165,25 @@ class MainActivity : ComponentActivity() {
         findViewById<RecyclerView>(R.id.recyclerview_points).adapter=pointAdapter
 
         findViewById<Button>(R.id.btn_start).setOnClickListener {
-            val target=findViewById<EditText>(R.id.et_target).text?.toString()
-            if(target.isNullOrEmpty()){
-                return@setOnClickListener
-            }
-            val date=findViewById<ConditionView>(R.id.cdv_days).conditionInt
-            if(date==0){
-                return@setOnClickListener
-            }
-            startActivity(Intent(this@MainActivity,ResultActivity::class.java).apply {
-                putParcelableArrayListExtra("condition",conditionList as ArrayList<out Parcelable>)
-                putExtra("point",pointList as ArrayList<out Parcelable>)
-                putExtra("target",target.toInt())
-                putExtra("date",date)
-            })
+//            val target=findViewById<EditText>(R.id.et_target).text?.toString()
+//            if(target.isNullOrEmpty()){
+//                return@setOnClickListener
+//            }
+//            val date=findViewById<ConditionView>(R.id.cdv_days).conditionInt
+//            if(date==0){
+//                return@setOnClickListener
+//            }
+//            startActivity(Intent(this@MainActivity,ResultActivity::class.java).apply {
+//                putParcelableArrayListExtra("condition",conditionList as ArrayList<out Parcelable>)
+//                putExtra("point",pointList as ArrayList<out Parcelable>)
+//                putExtra("target",target.toInt())
+//                putExtra("date",date)
+//            })
+            startActivity(Intent(this@MainActivity,CakeActivity::class.java)     )
+
         }
     }
+
 
 }
 

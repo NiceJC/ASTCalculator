@@ -124,6 +124,9 @@ class ResultActivity : ComponentActivity() {
                                 (currentStepIndex - rule.freeStepDaily) / rule.goldIncreaseStep
 
                             goldSize = rule.goldIncreaseSize * multiple + rule.startGoldSize
+                            if(goldSize>rule.maxGoldSize){
+                                goldSize=rule.maxGoldSize
+                            }
                         }
                         if (currentStepIndex + 1 >= rule.progressIncreaseStep && (currentStepIndex + 1) % rule.progressIncreaseStep == 0) {
                             progressSize = rule.progressIncreaseSize
@@ -195,6 +198,9 @@ class ResultActivity : ComponentActivity() {
                             (currentStepIndex - rule.freeStepDaily) / rule.goldIncreaseStep
 
                         goldSize = rule.goldIncreaseSize * multiple + rule.startGoldSize
+                        if(goldSize>rule.maxGoldSize){
+                            goldSize=rule.maxGoldSize
+                        }
                     }
                     coinGet=rule.coinGetSize.toFloat()/rule.coinGetStep
                     if (coinGet > targetCoinPerDay - totalCoinPerDay) {
@@ -229,6 +235,9 @@ class ResultActivity : ComponentActivity() {
             } else {
                 val multiple = (currentStepIndex - 1 - rule.freeStepDaily) / rule.goldIncreaseStep
                 goldSize = rule.goldIncreaseSize * multiple + rule.startGoldSize
+                if(goldSize>rule.maxGoldSize){
+                    goldSize=rule.maxGoldSize
+                }
                 repeatTime=(currentStepIndex - 1 - rule.freeStepDaily) % rule.goldIncreaseStep
             }
             if (currentStepIndex >= rule.progressIncreaseStep && (currentStepIndex) % rule.progressIncreaseStep == 0) {

@@ -13,4 +13,7 @@
     <color name="c_333">#333333</color>
     <color name="bg_color">#E7F7FF</color>
 
+    <color name="bg1">#f0e2c7</color>
+    <color name="txt1">#bd8854</color>
+
 </resources>
